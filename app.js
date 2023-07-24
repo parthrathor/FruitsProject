@@ -3,6 +3,7 @@
 const { log } = require("console");
 const mongoose = require("mongoose");
 mongoose.connect('mongodb://127.0.0.1:27017/fruitsDB');
+// mongoose.connect('mongodb://127.0.0.1:27017/personDB');
 
 const fruitSchema = new mongoose.Schema({
     name: {
@@ -19,30 +20,33 @@ const fruitSchema = new mongoose.Schema({
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
-const fruit = new Fruit ({
-    rating:8,
-    review:"Pretty solid as a fruit"
+const pineapple = new Fruit ({
+    name : "Pineapple",
+    rating:9,
+    review:"Awesome Fruit"
 });
 
-// fruit.save();
+pineapple.save();
 
 
 // // const mongoose = require ("mongoose");
 // // mongoose.connect('mongodb://127.0.0.1:27017/personDB');
 
-// // const personSchema = new mongoose.Schema({
-// //     name : String,
-// //     age: Number
-// // });
+const personSchema = new mongoose.Schema({
+    name : String,
+    age: Number,
+    favouriteFruit: fruitSchema
+});
 
-// // const Person = mongoose.model("Person",personSchema);
+const Person = mongoose.model("Person",personSchema);
 
-// // const person = new Person ({
-// //     name:"John",
-// //     age:31,
-// // });
+const person = new Person ({
+    name:"Amy",
+    age:21,
+    favouriteFruit:pineapple
+});
 
-// // person.save();
+person.save();
 
 // const Kiwi = new Fruit ({
 //     name:"Kiwi",
@@ -105,22 +109,22 @@ const fruit = new Fruit ({
 
 
 
-Fruit.deleteOne({name:"Peach"}
-).then(function(){
-    console.log("Successfully deleted Peach");
-})
-.catch(function(err){
-    console.log(err);
-})
+// Fruit.deleteOne({name:"Peach"}
+// ).then(function(){
+//     console.log("Successfully deleted Peach");
+// })
+// .catch(function(err){
+//     console.log(err);
+// })
 
-Fruit.find({
-}).then(function (result) {
-    mongoose.connection.close()
-    result.forEach(element => {
-        console.log(element.name)
-    });
-    }).catch(function(err){
-    console.log(err);
-    });
+// Fruit.find({
+// }).then(function (result) {
+//     mongoose.connection.close()
+//     result.forEach(element => {
+//         console.log(element.name)
+//     });
+//     }).catch(function(err){
+//     console.log(err);
+//     });
 
 
