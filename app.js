@@ -3,7 +3,6 @@
 const { log } = require("console");
 const mongoose = require("mongoose");
 mongoose.connect('mongodb://127.0.0.1:27017/fruitsDB');
-// mongoose.connect('mongodb://127.0.0.1:27017/personDB');
 
 const fruitSchema = new mongoose.Schema({
     name: {
@@ -20,13 +19,13 @@ const fruitSchema = new mongoose.Schema({
 
 const Fruit = mongoose.model("Fruit", fruitSchema);
 
-const pineapple = new Fruit ({
-    name : "Pineapple",
-    rating:9,
-    review:"Awesome Fruit"
+const mango = new Fruit ({
+    name : "Mango",
+    rating:8,
+    review:"Good Fruit"
 });
 
-pineapple.save();
+mango.save();
 
 
 // // const mongoose = require ("mongoose");
@@ -35,18 +34,18 @@ pineapple.save();
 const personSchema = new mongoose.Schema({
     name : String,
     age: Number,
-    favouriteFruit: fruitSchema
+    favouriteFruit: fruitSchema  //embedding fruit schema in person schema
 });
 
 const Person = mongoose.model("Person",personSchema);
 
-const person = new Person ({
-    name:"Amy",
-    age:21,
-    favouriteFruit:pineapple
-});
+// const person = new Person ({
+//     name:"Amy",
+//     age:21,
+//     favouriteFruit:pineapple
+// });
 
-person.save();
+// person.save();
 
 // const Kiwi = new Fruit ({
 //     name:"Kiwi",
@@ -106,6 +105,14 @@ person.save();
 // .catch(function(err){
 //     console.log(err);
 // })
+
+Person.updateOne({name:"John"},{favouriteFruit:mango}
+    ).then(function(){
+        console.log("Successfully updated");
+    })
+    .catch(function(err){
+        console.log(err);
+    })
 
 
 
